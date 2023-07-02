@@ -84,8 +84,8 @@
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\Models\Structures\HistoryEntry.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\Models\Api\ISourceControlProvider.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\Views\Adapters\ListAdapters\ConflictedChangeListAdapter.cs" />
-    <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\UserInterface\WindowCache.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\Models\StartModel.cs" />
+    <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\UserInterface\WindowCache.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\Settings\CollabSettingsProvider.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\Presenters\IMainPresenter.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy@1.17.2\Editor\Collaborate\Presenters\ChangesPresenter.cs" />

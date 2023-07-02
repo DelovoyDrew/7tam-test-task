@@ -14,6 +14,7 @@ public class MatchmakingService : Singleton<MatchmakingService>
     [SerializeField] private LobbyData _lobbyData;
 
     private static Lobby _connectedLobby;
+    public string Name{ get; private set; }    
 
     private const int HEARTBIT_DELAY = 15;
 
@@ -23,6 +24,11 @@ public class MatchmakingService : Singleton<MatchmakingService>
 
         if(_connectedLobby != null)
             Debug.Log(_connectedLobby.Id);
+    }
+
+    public void GetName(string name)
+    {
+        Name = name;
     }
 
     public async Task TryJoinLobby(string lobbyName)
@@ -118,5 +124,4 @@ public class MatchmakingService : Singleton<MatchmakingService>
     {
         StopAllCoroutines();
     }
-
 }

@@ -1,7 +1,6 @@
 using System;
-using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -27,12 +26,16 @@ public class PlayerInput : MonoBehaviour
     }
 
     private FloatingJoystick _movementJoystick;
+    private Button _shootButton;
 
     private bool _isButtonShootPressed;
 
-    public void Initialize(FloatingJoystick joyStick)
+    public void Initialize(FloatingJoystick joyStick, Button shootButton)
     {
         _movementJoystick = joyStick;
+        _shootButton = shootButton;
+
+        shootButton.onClick.AddListener(ShootClick);
     }
 
     private void Update()
@@ -48,6 +51,12 @@ public class PlayerInput : MonoBehaviour
         _isButtonShootPressed = isPressed;
     }
    
+    public void Enable(bool isEnabled)
+    {
+        _movementJoystick.enabled = isEnabled;
+        _shootButton.enabled = isEnabled;
+    }
+
     private void ShootClick()
     {
         OnShoot?.Invoke();

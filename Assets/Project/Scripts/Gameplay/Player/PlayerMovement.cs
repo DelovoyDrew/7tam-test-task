@@ -3,6 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Input))]
 public class PlayerMovement : MonoBehaviour
 {
+    public Vector2 MoveDirection { get; private set; }
+
+    [SerializeField] private Transform _body;
+
     [SerializeField] private PlayerInput _input;
     [SerializeField] private Rigidbody2D _rigidbody;
 
@@ -11,8 +15,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _movementSpeedWhenJump;
     [SerializeField] private float _maxMagnitude;
-
-    private Vector2 _direction;
 
     private void OnEnable()
     {
@@ -42,11 +44,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_input.MovementInputState == PlayerInput.MovementInput.MoveRight)
         {
-            _direction = transform.right;
+            MoveDirection = transform.right;
         }
         else if (_input.MovementInputState == PlayerInput.MovementInput.MoveLeft)
         {
-            _direction = -transform.right;
+            MoveDirection = -transform.right;
         }
         else
         {
@@ -54,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         var speed = _jumpData.IsOnFloor ? _movementSpeed : _movementSpeedWhenJump;
-        _rigidbody.AddForce(_direction * speed, ForceMode2D.Force);
+        _rigidbody.AddForce(MoveDirection * speed, ForceMode2D.Force);
 
         if (_rigidbody.velocity.magnitude > _maxMagnitude)
             _rigidbody.velocity = Vector2.ClampMagnitude(_rigidbody.velocity, _maxMagnitude);
@@ -68,7 +70,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        transform.localRotation = Quaternion.Euler(_direction);
+        var yRotation = MoveDirection.x > 0 ? 180 : 0;
+        _body.transform.localRotation = Quaternion.Euler(new Vector3(0, yRotation, 0));
     }
 }
 

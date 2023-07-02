@@ -1,3 +1,4 @@
+using System.Threading;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,6 +9,17 @@ public class LobbyMenu : MonoBehaviour
 
     private const string NULL_NAME = "Name cant be null";
 
+    public void GetName()
+    {
+        var name = _lobbyUI.GetPlayerName();
+        if (IsNameValid(name, NULL_NAME))
+        {
+            MatchmakingService.Instance.GetName(name);
+            _lobbyUI.CloseGetNamePopup();
+            _lobbyUI.OpenLobbyNamePopup();
+        }
+    }
+
     public async void CreateLobby()
     {
         var lobbyName = _lobbyUI.GetLobbyName();
@@ -15,6 +27,7 @@ public class LobbyMenu : MonoBehaviour
         if (IsNameValid(lobbyName, NULL_NAME))
         {
             await _matchmakingService.CreateLobby(lobbyName);
+
             if (NetworkManager.Singleton.IsHost)
             {
                 NetworkManager.Singleton.SceneManager.LoadScene(Scenes.GetNameByType(Scenes.Types.Game), UnityEngine.SceneManagement.LoadSceneMode.Single);
