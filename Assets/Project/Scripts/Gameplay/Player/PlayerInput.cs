@@ -84,7 +84,7 @@ public class PlayerInput : MonoBehaviour
         {
             OnMoveStateUpdated?.Invoke(MovementInputState);
 
-            if(MovementInputState != MovementInput.Stay)
+            if (MovementInputState != MovementInput.Stay)
             {
                 OnFlip?.Invoke();
             }

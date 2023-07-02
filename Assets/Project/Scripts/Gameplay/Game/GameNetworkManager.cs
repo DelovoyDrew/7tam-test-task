@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameNetworkManager : NetworkBehaviour
 {
+    [SerializeField] private List<Transform> _spawns;
+
     [SerializeField] private PlayerData _data = new PlayerData();
 
     private List<Player> _players = new List<Player>();
@@ -37,8 +39,6 @@ public class GameNetworkManager : NetworkBehaviour
     [ClientRpc]
     private void FinishGameClientRpc(string winnerName, string coins)
     {
-        bool isWinnerExist = false;
-
         _data.UI.FinishScreen.Activate(winnerName, coins);
 
         foreach (var player in _players)
@@ -52,14 +52,19 @@ public class GameNetworkManager : NetworkBehaviour
     private void TryInitializePlayersServerRpc()
     {
         var players = FindObjectsOfType<Player>();
+        bool canStartGame = players.Length >= 2;
+
         foreach (var player in players)
         {
             if(!_players.Contains(player))
             {
                 player.InitializePlayer(_data);
+                player.SetPlayerPositionClientRpc(_spawns[players.Length - 1].transform.position);
                 player.OnDie += PlayerDie;
                 _players.Add(player);
             }
+
+            player.EnableInputClientRpc(canStartGame);
         }
     }
 

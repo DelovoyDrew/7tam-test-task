@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Input))]
@@ -16,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _movementSpeedWhenJump;
     [SerializeField] private float _maxMagnitude;
 
+    private Coroutine _jumpRoutine;
+
     private void OnEnable()
     {
         _input.OnFlip += Flip;
@@ -28,9 +31,13 @@ public class PlayerMovement : MonoBehaviour
         _input.OnJump -= TryJump;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         _jumpData.CheckOnFloor();
+    }
+
+    private void FixedUpdate()
+    {
         TryMove();
     }
 
@@ -65,13 +72,25 @@ public class PlayerMovement : MonoBehaviour
     private void TryJump()
     {
         if (_jumpData.IsOnFloor)
-            _rigidbody.AddForce(transform.up * _jumpData.JumpForce, ForceMode2D.Force);
+        {
+            if(_jumpRoutine == null)
+            {
+                _jumpRoutine = StartCoroutine(JumpRoutine());
+            }
+        }
+    }
+    private IEnumerator JumpRoutine()
+    {
+        _rigidbody.AddForce(transform.up * _jumpData.JumpForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.5f);
+        _jumpRoutine = null;
     }
 
     private void Flip()
     {
-        var yRotation = MoveDirection.x > 0 ? 180 : 0;
-        _body.transform.localRotation = Quaternion.Euler(new Vector3(0, yRotation, 0));
+        var desiredScale = _body.transform.localScale;
+        desiredScale.x = ((_input.JoystickX > 0 ? -1 : 1) * Mathf.Abs(_body.transform.localScale.x));
+        _body.transform.localScale = desiredScale;
     }
 }
 

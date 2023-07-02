@@ -29,12 +29,12 @@ public class Player : NetworkBehaviour, IDamageable, ICoinCollectable
         if (IsOwner)
         {
             _name.Value = MatchmakingService.Instance.Name;
-            _input.enabled = true;
             _input.Initialize(data.UI.Joystick, data.UI.ShootButton);
+            _input.enabled = true;
             _movement.enabled = true;
             _input.OnShoot += () =>
             {
-                _shooting.ShootServerRpc(_movement.MoveDirection);
+                _shooting.ShootServerRpc(_shooting.ShootPosition, _movement.MoveDirection);
             };
             data.UI.HpBar.Initialize(_maxHP, _health);
             data.UI.CoinsGameUI.Initialize(_coins);
@@ -53,9 +53,22 @@ public class Player : NetworkBehaviour, IDamageable, ICoinCollectable
         _nameText.text = _name.Value;
     }
 
+    [ClientRpc]
+    public void SetPlayerPositionClientRpc(Vector3 position)
+    {
+        transform.position = position;
+    }
+
     public void GetName(string name)
     {
         _name.Value = name;
+    }
+
+    [ClientRpc]
+    public void EnableInputClientRpc(bool isEnabled)
+    {
+        if (IsOwner)
+            _input.Enable(isEnabled);
     }
 
     public void CollectCoin(Coin coin)
@@ -79,7 +92,6 @@ public class Player : NetworkBehaviour, IDamageable, ICoinCollectable
 
     private void Die()
     {
-        //play some animation
         OnDie?.Invoke();
         DieClientRpc();
     }
@@ -87,6 +99,7 @@ public class Player : NetworkBehaviour, IDamageable, ICoinCollectable
     [ClientRpc]
     private void DieClientRpc()
     {
+        gameObject.gameObject.SetActive(false);
         _input.Enable(false);
     }
 

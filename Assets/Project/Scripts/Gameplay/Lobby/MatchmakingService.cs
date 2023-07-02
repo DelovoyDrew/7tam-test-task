@@ -7,6 +7,7 @@ using Unity.Services.Relay;
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections;
+using Unity.Services.Authentication;
 
 public class MatchmakingService : Singleton<MatchmakingService>
 {
@@ -118,6 +119,25 @@ public class MatchmakingService : Singleton<MatchmakingService>
     private void SetTransformAsClient(Unity.Services.Relay.Models.JoinAllocation allocation)
     {
         _transport.SetClientRelayData(allocation.RelayServer.IpV4, (ushort)allocation.RelayServer.Port, allocation.AllocationIdBytes, allocation.Key, allocation.ConnectionData, allocation.HostConnectionData);
+    }
+
+    public void Leave()
+    {
+        StopAllCoroutines();
+        if (_connectedLobby != null)
+        {
+            var playerId = AuthenticationService.Instance.PlayerId;
+            if (_connectedLobby.HostId == playerId)
+            {
+                Lobbies.Instance.DeleteLobbyAsync(_connectedLobby.Id);
+
+            }
+            else
+            {
+                Lobbies.Instance.RemovePlayerAsync(_connectedLobby.Id, playerId);
+            }
+            _connectedLobby = null;
+        }
     }
 
     private void OnDestroy()
