@@ -63,7 +63,7 @@ public class GameNetworkManager : NetworkBehaviour
                 player.OnDie += PlayerDie;
                 _players.Add(player);
             }
-
+            player.GetName(player.Name);
             player.EnableInputClientRpc(canStartGame);
         }
     }

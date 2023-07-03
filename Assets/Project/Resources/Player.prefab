@@ -245,7 +245,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 6219004772513282571}
   _jumpData:
     <JumpForce>k__BackingField: 25
-    <MaxJumpMagnitude>k__BackingField: 100
+    <MaxJumpMagnitude>k__BackingField: 8
     FloorLayers:
       serializedVersion: 2
       m_Bits: 1

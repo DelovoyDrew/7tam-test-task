@@ -62,6 +62,7 @@ public class Player : NetworkBehaviour, IDamageable, ICoinCollectable
     public void GetName(string name)
     {
         _name.Value = name;
+        _nameText.text = _name.Value;
     }
 
     [ClientRpc]
