@@ -53,8 +53,11 @@ public class PlayerInput : MonoBehaviour
    
     public void Enable(bool isEnabled)
     {
-        _movementJoystick.enabled = isEnabled;
-        _shootButton.enabled = isEnabled;
+        if (_movementJoystick != null)
+            _movementJoystick.enabled = isEnabled;
+
+        if (_shootButton != null)
+            _shootButton.enabled = isEnabled;
     }
 
     private void ShootClick()

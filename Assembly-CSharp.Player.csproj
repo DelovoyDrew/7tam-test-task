@@ -65,9 +65,11 @@
     <Compile Include="Assets\Project\Scripts\Architecture\IDamageable.cs" />
     <Compile Include="Assets\Project\Scripts\Gameplay\Lobby\LobbyMenu.cs" />
     <Compile Include="Assets\Project\Scripts\Gameplay\Player\Player.cs" />
+    <Compile Include="Assets\Project\Scripts\UI\CoinsGameUI.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\Project\Scripts\Gameplay\Lobby\LobbyData.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
+    <Compile Include="Assets\Project\Scripts\Core\NetworkString.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\Project\Scripts\General\Loading.cs" />
     <Compile Include="Assets\Project\Scripts\Gameplay\Player\Bullet.cs" />
@@ -85,8 +87,7 @@
     <Compile Include="Assets\Project\Scripts\Gameplay\Lobby\UnityServicesAuthentiacor.cs" />
     <Compile Include="Assets\Project\Scripts\Gameplay\Player\PlayerShooting.cs" />
     <Compile Include="Assets\Project\Scripts\Gameplay\Game\GameNetworkManager.cs" />
-    <Compile Include="Assets\Project\Scripts\UI\CoinsGameUI.cs" />
-    <Compile Include="Assets\Project\Scripts\Core\NetworkString.cs" />
+    <Compile Include="Assets\Project\Scripts\Gameplay\Player\PlayerAnimator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

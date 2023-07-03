@@ -3,13 +3,16 @@ using UnityEngine;
 
 public class PlayerShooting : NetworkBehaviour
 {
+
     public Vector3 ShootPosition => _shooterData.ShootPoint.position;
 
+    [SerializeField] private PlayerAnimator _animator;
     [field: SerializeField] private ShooterData _shooterData = new ShooterData();
 
     [ServerRpc]
     public void ShootServerRpc(Vector3 position, Vector3 direction)
     {
+        _animator.ChangeState(PlayerAnimator.States.Shoot);
         var bullet = Instantiate(_shooterData.Bullet, position, Quaternion.Euler(direction));
         bullet.GetComponent<NetworkObject>().Spawn();
         bullet.Initialize(_shooterData.ShootForce, direction);

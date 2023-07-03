@@ -1,6 +1,7 @@
 using System.Threading;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyMenu : MonoBehaviour
 {
@@ -20,12 +21,13 @@ public class LobbyMenu : MonoBehaviour
         }
     }
 
-    public async void CreateLobby()
+    public async void CreateLobby(Button createLobbyButton)
     {
         var lobbyName = _lobbyUI.GetLobbyName();
 
         if (IsNameValid(lobbyName, NULL_NAME))
         {
+            createLobbyButton.gameObject.SetActive(false);
             await _matchmakingService.CreateLobby(lobbyName);
 
             if (NetworkManager.Singleton.IsHost)
@@ -35,12 +37,15 @@ public class LobbyMenu : MonoBehaviour
         }
     }
 
-    public async void JoinLobby()
+    public async void JoinLobby(Button createLobbyButton)
     {
         var lobbyName = _lobbyUI.GetLobbyName();
 
         if (IsNameValid(lobbyName, NULL_NAME))
+        {
+            createLobbyButton.gameObject.SetActive(false);
             await _matchmakingService.TryJoinLobby(lobbyName);
+        }
     }
 
     private bool IsNameValid(string value, string errorMessage)

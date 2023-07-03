@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _body;
 
     [SerializeField] private PlayerInput _input;
+    [SerializeField] private PlayerAnimator _animator;
     [SerializeField] private Rigidbody2D _rigidbody;
 
     [SerializeField] private Jump _jumpData;
@@ -38,13 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        TryMove();
-    }
-
-    private void TryMove()
-    {
-        if (_input.MovementInputState != PlayerInput.MovementInput.Stay)
-            Move();
+        Move();
     }
 
     private void Move()
@@ -59,13 +54,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            _animator.ChangeState(PlayerAnimator.States.Idle);
             return;
         }
-
+        _animator.ChangeState(PlayerAnimator.States.Run);
         var speed = _jumpData.IsOnFloor ? _movementSpeed : _movementSpeedWhenJump;
         _rigidbody.AddForce(MoveDirection * speed, ForceMode2D.Force);
 
-        if (_rigidbody.velocity.magnitude > _maxMagnitude)
+        if (_rigidbody.velocity.magnitude > _maxMagnitude && _jumpData.IsOnFloor && _jumpRoutine == null)
             _rigidbody.velocity = Vector2.ClampMagnitude(_rigidbody.velocity, _maxMagnitude);
     }
 
@@ -82,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator JumpRoutine()
     {
         _rigidbody.AddForce(transform.up * _jumpData.JumpForce, ForceMode2D.Impulse);
+        if (_rigidbody.velocity.magnitude > _jumpData.MaxJumpMagnitude)
+            _rigidbody.velocity = Vector2.ClampMagnitude(_rigidbody.velocity, _jumpData.MaxJumpMagnitude);
         yield return new WaitForSeconds(0.5f);
         _jumpRoutine = null;
     }
@@ -100,6 +98,7 @@ public class Jump
     public bool IsOnFloor { get; private set; }
 
     [field: SerializeField] public float JumpForce { get; private set; }
+    [field: SerializeField] public float MaxJumpMagnitude { get; private set; }
 
     [SerializeField] private LayerMask FloorLayers;
     [SerializeField] private float _checkRadius;

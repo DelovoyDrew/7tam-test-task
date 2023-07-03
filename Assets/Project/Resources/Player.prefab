@@ -241,9 +241,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _body: {fileID: 4506943301318329800}
   _input: {fileID: 6219004772513282677}
+  _animator: {fileID: 1397109419998211535}
   _rigidbody: {fileID: 6219004772513282571}
   _jumpData:
     <JumpForce>k__BackingField: 25
+    <MaxJumpMagnitude>k__BackingField: 100
     FloorLayers:
       serializedVersion: 2
       m_Bits: 1
@@ -278,6 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5bea44714583f44bace10ba11bb5209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 1397109419998211535}
   _shooterData:
     <ShootPoint>k__BackingField: {fileID: 7297484415645534292}
     <ShootForce>k__BackingField: 10
@@ -400,6 +403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4506943301318329800}
+  - component: {fileID: 1397109419998211535}
   - component: {fileID: 8468279495353503422}
   - component: {fileID: 2076364343445832618}
   - component: {fileID: 4531835128198276550}
@@ -427,6 +431,19 @@ Transform:
   m_Father: {fileID: 6219004772513282570}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1397109419998211535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7678022449540161117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf5293f3cffdf94e88b0a231845b55d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2076364343445832618}
 --- !u!212 &8468279495353503422
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -511,7 +528,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 2115935843
+    DestinationState: 197571886
+    TransitionDuration: 0.25
+    TriggerNameHash: 125937960
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 2115935843
+    DestinationState: 1828376785
+    TransitionDuration: 0.25
+    TriggerNameHash: -1316629574
+    TransitionIndex: 1
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 1513278284
+    DestinationState: 197571886
+    TransitionDuration: 0.25
+    TriggerNameHash: 125937960
+    TransitionIndex: 1
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 1513278284
+    DestinationState: 1828376785
+    TransitionDuration: 0.25
+    TriggerNameHash: -1316629574
+    TransitionIndex: 2
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 197571886
+    DestinationState: 1828376785
+    TransitionDuration: 0.25
+    TriggerNameHash: -1316629574
+    TransitionIndex: 2
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 1828376785
+    DestinationState: 197571886
+    TransitionDuration: 0.25
+    TriggerNameHash: 125937960
+    TransitionIndex: 0
   m_Animator: {fileID: 2076364343445832618}
 --- !u!114 &5230168324035202489
 MonoBehaviour:
